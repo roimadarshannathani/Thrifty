@@ -11,18 +11,20 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ name }) => {
   const [chat, setChat] = useState<string[]>([]);
   const stompClientRef = useRef<any>(null);
 
-useEffect(() => {
-  const socket = new SockJS("/ws");
-  const stompClient = Stomp.over(socket);
-  stompClient.connect({}, () => {
-    stompClient.subscribe("/topic/messages", (msg: any) => {
-      if (msg.body) {
-        setChat((prev) => [...prev, msg.body]);
-      }
+  useEffect(() => {
+    const wsUrl =
+      "http://ip172-18-0-10-d1j3tq291nsg009j0pfg-8080.direct.labs.play-with-docker.com/ws";
+    const socket = new SockJS(wsUrl);
+    const stompClient = Stomp.over(socket);
+    stompClient.connect({}, () => {
+      stompClient.subscribe("/topic/messages", (msg: any) => {
+        if (msg.body) {
+          setChat((prev) => [...prev, msg.body]);
+        }
+      });
     });
-  });
-  stompClientRef.current = stompClient;
-}, []);
+    stompClientRef.current = stompClient;
+  }, []);
 
   const sendMessage = () => {
     if (
