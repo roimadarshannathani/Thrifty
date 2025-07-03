@@ -16,6 +16,7 @@ function App() {
       }}
     >
       {name ? <ChatRoom name={name} /> : <NameForm onSetName={setName} />}
+      Developed by fellow intern, instance running on docker.
     </div>
   );
 }
