@@ -11,22 +11,18 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ name }) => {
   const [chat, setChat] = useState<string[]>([]);
   const stompClientRef = useRef<any>(null);
 
-  useEffect(() => {
-    console.log(window)
-    // const { protocol, hostname } = window.location;
-    // const wsPort = 8080; // Change if your backend uses a different port in production
-    const wsUrl = `http://ip172-18-0-55-d1j24b291nsg009j0kqg-8080.direct.labs.play-with-docker.com/ws`;
-    const socket = new SockJS(wsUrl);
-    const stompClient = Stomp.over(socket);
-    stompClient.connect({}, () => {
-      stompClient.subscribe("/topic/messages", (msg: any) => {
-        if (msg.body) {
-          setChat((prev) => [...prev, msg.body]);
-        }
-      });
+useEffect(() => {
+  const socket = new SockJS("/ws");
+  const stompClient = Stomp.over(socket);
+  stompClient.connect({}, () => {
+    stompClient.subscribe("/topic/messages", (msg: any) => {
+      if (msg.body) {
+        setChat((prev) => [...prev, msg.body]);
+      }
     });
-    stompClientRef.current = stompClient;
-  }, []);
+  });
+  stompClientRef.current = stompClient;
+}, []);
 
   const sendMessage = () => {
     if (
