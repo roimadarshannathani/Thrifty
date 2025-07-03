@@ -12,7 +12,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ name }) => {
   const stompClientRef = useRef<any>(null);
 
   useEffect(() => {
-    const socket = new SockJS("http://localhost:8081/ws");
+    const socket = new SockJS("http://localhost:8080/ws");
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
       stompClient.subscribe("/topic/messages", (msg: any) => {
