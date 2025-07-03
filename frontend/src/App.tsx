@@ -1,4 +1,3 @@
-import Stomp from "stompjs";
 import { useState } from "react";
 import "./App.css";
 import ChatRoom from "./ChatRoom";
