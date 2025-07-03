@@ -12,7 +12,10 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ name }) => {
   const stompClientRef = useRef<any>(null);
 
   useEffect(() => {
-    const socket = new SockJS("http://localhost:8080/ws");
+    const { protocol, hostname } = window.location;
+    const wsPort = 8080; // Change if your backend uses a different port in production
+    const wsUrl = `${protocol}//${hostname}:${wsPort}/ws`;
+    const socket = new SockJS(wsUrl);
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
       stompClient.subscribe("/topic/messages", (msg: any) => {
