@@ -77,6 +77,12 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ name }) => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           style={{ flex: 1, marginRight: 8 }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && message.trim()) {
+              e.preventDefault();
+              sendMessage();
+            }
+          }}
         />
         <button onClick={sendMessage} disabled={!message.trim()}>
           Send
