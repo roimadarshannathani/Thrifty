@@ -13,7 +13,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ name }) => {
 
   useEffect(() => {
     const wsUrl =
-      "http://ip172-18-0-13-d1j4cpk69qi000b7i6pg-8080.direct.labs.play-with-docker.com/ws";
+      "http://ip172-18-0-37-d1jp7ja91nsg00brv040-8080.direct.labs.play-with-docker.com/ws";
     const socket = new SockJS(wsUrl);
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
